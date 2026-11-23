@@ -1,6 +1,7 @@
 \documentclass{beamer}
 
 \usetheme{Madrid}
+\usepackage{tikz}
 
 
 \title{Measure Theoretic Probability}
@@ -74,14 +75,109 @@
    \]
    3. Given a sequence of pairwise disjoint sets $\{A\}_{i=0}^{\infty}$, that is for all i,j $A_i \cap A_j = \varnothing$, then 
   \[
-      &\quad \mu(\bigcup_{i=0}^{\infty}(A)) = \bigcup_{i=0}^{\infty}\mu(A) 
+      \mu\left(\bigcup_{i=0}^{\infty} A_i\right) = \sum_{i=0}^{\infty}\mu(A_i)
   \]
 \end{frame}
 
 
 
-\begin{frame}{Lesbegue Measure}
+\begin{frame}{Lebesgue Measure}
 
+If \(X\) is a set and \(\mathcal{F} \subseteq \mathcal{P}(X)\) is a \(\sigma\)-algebra, then \((X,\mathcal{F})\) is called a measurable space, and the sets in \(\mathcal{F}\) are called measurable sets. If \(\mu\) is a measure on \((X,\mathcal{F})\), then \((X,\mathcal{F},\mu)\) is called a measure space.
+
+
+Simple function 
+\[
+  \phi(x) = \sum_{j=1}^{n} a_j \chi_{E_j}(x)
+\]
+
+Lebesgue  Integral 
+\[
+  \int_X \phi\,d\mu = \sum_{j=1}^n a_j \mu(E_j)
+\]
+Integration of over complex functions 
+$f^- = \max\{-f,0\}$ and $f^+ = \max\{f,0\}$
+\[
+  f = f^+ - f^- 
+\]
+\[
+\int_X f\,dP
+=
+\int_X f^+\,dP
+-
+\int_X f^-\,dP,
+\]
+
+\end{frame}
+
+\begin{frame}{Lebesgue Integral of a Simple Function}
+  Let
+  \[
+    \phi(x) = 2\chi_{[0,1)}(x) + 5\chi_{[1,3)}(x) + 7\chi_{[3,4]}(x).
+  \]
+  \begin{center}
+  \begin{tikzpicture}[x=1.25cm,y=.5cm]
+    \draw[->] (0,0) -- (4.4,0) node[right] {$x$};
+    \draw[->] (0,0) -- (0,8.2) node[above] {$\phi(x)$};
+    \foreach \x in {0,1,2,3,4}
+      \draw (\x,0.15) -- (\x,-0.15) node[below] {\x};
+    \foreach \y in {2,5,7}
+      \draw (0.1,\y) -- (-0.1,\y) node[left] {\y};
+
+    \fill[teal!25] (0,0) rectangle (1,2);
+    \fill[orange!25] (1,0) rectangle (3,5);
+    \fill[violet!25] (3,0) rectangle (4,7);
+    \draw[very thick,teal!70!black] (0,2) -- (1,2);
+    \draw[very thick,orange!80!black] (1,5) -- (3,5);
+    \draw[very thick,violet!80!black] (3,7) -- (4,7);
+    \draw[teal!70!black,fill=white] (1,2) circle (0.07);
+    \fill[orange!80!black] (1,5) circle (0.07);
+    \draw[orange!80!black,fill=white] (3,5) circle (0.07);
+    \fill[violet!80!black] (3,7) circle (0.07);
+    \fill[violet!80!black] (4,7) circle (0.07);
+    \node[teal!70!black] at (.5,2.55) {$E_1$};
+    \node[orange!80!black] at (2,5.55) {$E_2$};
+    \node[violet!80!black] at (3.5,7.55) {$E_3$};
+  \end{tikzpicture}
+  \end{center}
+  \[
+    \int_{[0,4]} \phi\,d\lambda
+    = 2\lambda(E_1) + 5\lambda(E_2) + 7\lambda(E_3)
+    = 2(1) + 5(2) + 7(1) = 19.
+  \]
+\end{frame}
+
+\begin{frame}{Negative Values Give Signed Area}
+  Let
+  \[
+    \phi(x) = 2\chi_{[0,1)}(x) - 3\chi_{[1,3)}(x) + \chi_{[3,4]}(x).
+  \]
+  \begin{center}
+  \begin{tikzpicture}[x=1.25cm,y=.5cm]
+    \draw[->] (0,0) -- (4.4,0) node[right] {$x$};
+    \draw[->] (0,-4.1) -- (0,3.2) node[above] {$\phi(x)$};
+    \foreach \x in {0,1,2,3,4}
+      \draw (\x,0.15) -- (\x,-0.15) node[below] {\x};
+    \foreach \y in {-3,1,2}
+      \draw (0.1,\y) -- (-0.1,\y) node[left] {\y};
+
+    \fill[teal!25] (0,0) rectangle (1,2);
+    \fill[red!25] (1,-3) rectangle (3,0);
+    \fill[violet!25] (3,0) rectangle (4,1);
+    \draw[very thick,teal!70!black] (0,2) -- (1,2);
+    \draw[very thick,red!75!black] (1,-3) -- (3,-3);
+    \draw[very thick,violet!80!black] (3,1) -- (4,1);
+    \draw[teal!70!black,fill=white] (1,2) circle (0.07);
+    \fill[red!75!black] (1,-3) circle (0.07);
+    \draw[red!75!black,fill=white] (3,-3) circle (0.07);
+    \fill[violet!80!black] (3,1) circle (0.07);
+    \fill[violet!80!black] (4,1) circle (0.07);
+  \end{tikzpicture}
+  \end{center}
+  Areas below the $x$-axis are subtracted:
+  \[
+    \int_{[0,4]} \phi\,d\lambda = 2(1) - 3(2) + 1(1) = -3.
+  \]
 \end{frame}
 
 % ==========================
